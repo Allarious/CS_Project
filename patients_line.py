@@ -29,7 +29,3 @@ class PatientsLine:
     
     def get_line_length(self):
         return self.get_plus_patients_length() + self.get_minus_patients_length()
-        
-if __name__ == "__main__":
-    patients_line = PatientsLine()
-    patients_line.elapse_time()
