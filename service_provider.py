@@ -1,13 +1,11 @@
 from patients_line import PatientsLine
 
 class ServiceProvider:
-    def __init__(self, number_of_service_providers, array_of_means):
-        if number_of_service_providers != len(array_of_means):
-            raise("number of service provider is not equal to array of means length.")
+    def __init__(self, array_of_means):
         self.patients_line = PatientsLine()
-        self.number_of_service_providers = number_of_service_providers
-        self.current_tables = [0] * number_of_service_providers
-        self.current_patients = [0] * number_of_service_providers
+        self.number_of_service_providers = len(array_of_means)
+        self.current_tables = [0] * self.number_of_service_providers
+        self.current_patients = [0] * self.number_of_service_providers
         self.array_of_means = array_of_means
         
     def __get_service_time(self, index, patient):

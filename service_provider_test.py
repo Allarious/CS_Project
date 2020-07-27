@@ -6,7 +6,7 @@ class TestServiceProvider(unittest.TestCase):
     
     def test_empty_service_provider(self):
         print("========= empty test =========")
-        sp = ServiceProvider(2, [3, 4])
+        sp = ServiceProvider([3, 4])
         
         self.assertTrue(sp.does_accept_patient())
         
@@ -15,7 +15,7 @@ class TestServiceProvider(unittest.TestCase):
         
     def test_adding_to_perovider(self):
         print("========= add test =========")
-        sp = ServiceProvider(3, [2, 1, 4])
+        sp = ServiceProvider([2, 1, 4])
         
         sp.add_to_line(Patient("+", 2))
         sp.add_to_line(Patient("+", 5))
