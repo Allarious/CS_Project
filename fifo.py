@@ -30,6 +30,7 @@ class Fifo:
         if len(self.line) == 0:
             return None
         else:
+            self.line[0].patience_in_minutes -= self.time - self.line[0].entry_time
             return self.line.pop(0)
         
     def print_patients(self):

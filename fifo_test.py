@@ -31,5 +31,24 @@ class TestFifo(unittest.TestCase):
         fifo.elapse_time()    
         self.assertEqual(0, len(fifo.line))
     
+    def test_patience_time(self):
+        fifo = Fifo()
+        
+        fifo.add_to_line(Patient("+", 2))
+        fifo.add_to_line(Patient("+", 3))
+        fifo.add_to_line(Patient("+", 5))
+        
+        fifo.elapse_time()
+        
+        self.assertEqual(1, fifo.get_next_patient().patience_in_minutes)
+        
+        fifo.elapse_time()
+        fifo.elapse_time()
+        
+        self.assertEqual(2, fifo.get_next_patient().patience_in_minutes)
+        
+        self.assertEqual(0, len(fifo.line))
+        self.assertIsNone(fifo.get_next_patient())
+    
 if __name__ == "__main__":
     unittest.main()
