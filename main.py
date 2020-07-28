@@ -41,7 +41,7 @@ if __name__ == "__main__":
     split_character = ","
     
     number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate = list(map(int, file.readline().split(split_character)))
-    print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
+    # print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
     
     reception = ServiceProvider([reception_service_rate], "reception")
     doctors_rooms = DoctorsRooms()
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 100
+    patient_goal = 10000
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
     total_number_of_patients = 0
     total_plus = 0
@@ -135,6 +135,8 @@ if __name__ == "__main__":
     np_line_plus = np.array(array_line_plus)
     np_line_minus = np.array(array_line_minus)
     
+    time_end = doctors_rooms.get_time()
+    
     print("Total number of patients : " + str(total_number_of_patients))
     print("Total number of plus patients : " + str(total_plus))
     print("Total number of minus patients : " + str(total_minus))
@@ -150,7 +152,13 @@ if __name__ == "__main__":
     print("Mean amount of time spent in line (patients not yet tested for corona) : " + str(round(np.sum(np_line_minus)/total_minus, 2)))
     
     #===== task for patients who left
-    print("A total amount of " + str(left_plus + left_minus) + " left the hospital. " + str(left_plus) + " of them were tested plus for corona and " + str(left_minus) + " of them were not tested yet.")
+    print("A total amount of " + str(left_plus + left_minus) + " left the hospital. this was a simulation of " + str(time_end) + " minutes. " + str(left_plus) + " of them were tested plus for corona and " + str(left_minus) + " of them were not tested yet.")
+    
+    #===== task for mean line length of reception and doctors rooms
+    print("reception mean line length was : " + str(round((np.sum(np_line_plus[-1]) + np.sum(np_line_minus[-1])) / time_end, 2)) + " for " + str(time_end) + " minutes.")
+    print("and doctors rooms line mean length was according to the following: ")
+    for doctor_room_index in range(len(np_line_plus) - 1):
+        print(str(round((np.sum(np_line_plus[doctor_room_index]) + np.sum(np_line_minus[doctor_room_index])) / time_end, 2)))
         
     print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
     

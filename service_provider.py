@@ -40,6 +40,9 @@ class ServiceProvider:
     def get_left_minus_patients(self):
         return self.patients_line.corona_minus_patients.patients_left_the_hospital 
     
+    def get_time(self):
+        return self.patients_line.corona_plus_patients.time
+    
     def does_accept_patient(self):
         if 0 in self.current_tables:
             return True

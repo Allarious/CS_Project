@@ -10,7 +10,7 @@ class DoctorsRooms:
     def get_time(self):
         if len(self.doctors_rooms) == 0:
             raise("there should be at least one doctors room.")
-        return self.doctors_rooms[0].time
+        return self.doctors_rooms[0].get_time()
     
     def elapse_time(self):
         for room in self.doctors_rooms:
