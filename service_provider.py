@@ -1,4 +1,5 @@
 from patients_line import PatientsLine
+from numpy import random
 
 class ServiceProvider:
     def __init__(self, array_of_means):
@@ -12,7 +13,7 @@ class ServiceProvider:
         if index >= self.number_of_service_providers:
             raise("index more than number of providers.")
             return None
-        service_time = self.array_of_means[index]
+        service_time = random.exponential(self.array_of_means[index])
         self.current_tables[index] = service_time
         self.current_patients[index] = patient
         return service_time
@@ -70,7 +71,7 @@ class ServiceProvider:
         print(self.current_tables)
         
         for table in range(len(self.current_tables)):
-            if self.current_tables[table] == 1:
+            if 0 < self.current_tables[table] <= 1:
                 out_patients.append(self.current_patients[table])
             self.current_tables[table] = max(0, self.current_tables[table] - 1)
             

@@ -40,7 +40,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    for i in range(20):
+    for i in range(100):
         
         print("*****")
         print("time: " + str(i))
