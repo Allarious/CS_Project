@@ -1,8 +1,11 @@
 from patients_line import PatientsLine
 from numpy import random
+from math import ceil
 
 class ServiceProvider:
     def __init__(self, array_of_means, patience_rate = 0, work = "doctor"):
+        self.answering_time_plus = []
+        self.answering_time_minus = []
         self.work = work
         self.current_minus_patients = []
         self.current_plus_patients = []
@@ -26,6 +29,10 @@ class ServiceProvider:
                 service_time = 1
         self.current_tables[index] = service_time
         self.current_patients[index] = patient
+        if patient.corona_test_result == "+":
+            self.answering_time_plus.append(ceil(service_time))
+        else:
+            self.answering_time_minus.append(ceil(service_time))
         return service_time
     
     def get_fifo_plus_data(self):

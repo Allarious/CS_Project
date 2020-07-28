@@ -4,6 +4,8 @@ from doctors_rooms import DoctorsRooms
 from time import time
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.dates import date2num
+import datetime
 
 def elapse_time(reception, doctors):
     patients = reception.elapse_time()
@@ -59,7 +61,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 10000
+    patient_goal = 1000
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
     total_number_of_patients = 0
     total_plus = 0
@@ -169,13 +171,13 @@ if __name__ == "__main__":
     np_waiting_in_line_cumulutive_minus = np_line_minus.sum(axis=0)
     
     plt.figure(0)
-    plt.title("answering frequency - blue (plus), orange (not tested), green (overall)")
+    plt.title("answering all patients to - blue (plus), orange (not tested), green (overall)")
     plt.plot(range(time_end), np_getting_service_cumulutive_plus)
     plt.plot(range(time_end), np_getting_service_cumulutive_minus)
     plt.plot(range(time_end), np.add(np_getting_service_cumulutive_plus, np_getting_service_cumulutive_minus))
     
     plt.figure(1)
-    plt.title("waiting time frequency - blue (plus), orange (not tested), green (overall)")
+    plt.title("all patients waiting to time  - blue (plus), orange (not tested), green (overall)")
     plt.plot(range(time_end), np_waiting_in_line_cumulutive_plus)
     plt.plot(range(time_end), np_waiting_in_line_cumulutive_minus)
     plt.plot(range(time_end), np.add(np_waiting_in_line_cumulutive_plus, np_waiting_in_line_cumulutive_minus))
@@ -194,7 +196,20 @@ if __name__ == "__main__":
     
     plt.show()
     
+    plus_wait, minus_wait = doctors_rooms.get_waited()
     
+    plt.figure(4)
+    plt.title("frequency of waitings in line - blue (tested plus), orange (not tested)")
+    np_plus_wait = np.array(plus_wait)
+    np_minus_wait = np.array(minus_wait)
+    print(np_plus_wait.flatten())
+    unique_plus_wait, unique_plus_count = np.unique(np.concatenate(np_plus_wait).ravel(), return_counts=True)
+    unique_minus_wait, unique_minus_count = np.unique(np.concatenate(np_minus_wait).ravel(), return_counts=True)
+    
+    plt.bar(unique_plus_wait, unique_plus_count, width=0.2)
+    plt.bar(unique_minus_wait - 0.2, unique_minus_count, width=0.2)
+    
+    plt.show()
     
     
         
