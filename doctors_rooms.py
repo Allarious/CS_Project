@@ -1,11 +1,23 @@
 from service_provider import ServiceProvider
 
 class DoctorsRooms:
-    def __init__(self):
+    def __init__(self, patience_rate = 0):
+        self.patience_rate = patience_rate
         self.doctors_rooms = []
         
+    def get_waited(self):
+        if len(self.doctors_rooms) == 0:
+            raise("there should be at least one doctors room.")
+        plus_wait = []
+        minus_wait = []
+        for doctors_room in self.doctors_rooms:
+            plus_wait.append(doctors_room.patients_line.corona_plus_patients.waited)
+            minus_wait.append(doctors_room.patients_line.corona_minus_patients.waited)
+        return plus_wait, minus_wait
+            
+        
     def add_room(self, doctors_service_rate):
-        self.doctors_rooms.append(ServiceProvider(doctors_service_rate))
+        self.doctors_rooms.append(ServiceProvider(doctors_service_rate, self.patience_rate))
     
     def get_time(self):
         if len(self.doctors_rooms) == 0:

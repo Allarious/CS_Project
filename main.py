@@ -3,6 +3,7 @@ from patient import Patient
 from doctors_rooms import DoctorsRooms
 from time import time
 import numpy as np
+import matplotlib.pyplot as plt
 
 def elapse_time(reception, doctors):
     patients = reception.elapse_time()
@@ -43,8 +44,8 @@ if __name__ == "__main__":
     number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate = list(map(int, file.readline().split(split_character)))
     # print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
     
-    reception = ServiceProvider([reception_service_rate], "reception")
-    doctors_rooms = DoctorsRooms()
+    reception = ServiceProvider([reception_service_rate], patient_patiance_rate, "reception")
+    doctors_rooms = DoctorsRooms(patient_patiance_rate)
     
     for line in range(number_of_rooms):
         doctors_service_rate = list(map(int, file.readline().split(split_character)))
@@ -159,6 +160,43 @@ if __name__ == "__main__":
     print("and doctors rooms line mean length was according to the following: ")
     for doctor_room_index in range(len(np_line_plus) - 1):
         print(str(round((np.sum(np_line_plus[doctor_room_index]) + np.sum(np_line_minus[doctor_room_index])) / time_end, 2)))
+        
+    #===== drawing the graphs 
+    np_getting_service_cumulutive_plus = np_plus.sum(axis=0)
+    np_getting_service_cumulutive_minus = np_minus.sum(axis=0)
+    
+    np_waiting_in_line_cumulutive_plus = np_line_plus.sum(axis=0)
+    np_waiting_in_line_cumulutive_minus = np_line_minus.sum(axis=0)
+    
+    plt.figure(0)
+    plt.title("answering frequency - blue (plus), orange (not tested), green (overall)")
+    plt.plot(range(time_end), np_getting_service_cumulutive_plus)
+    plt.plot(range(time_end), np_getting_service_cumulutive_minus)
+    plt.plot(range(time_end), np.add(np_getting_service_cumulutive_plus, np_getting_service_cumulutive_minus))
+    
+    plt.figure(1)
+    plt.title("waiting time frequency - blue (plus), orange (not tested), green (overall)")
+    plt.plot(range(time_end), np_waiting_in_line_cumulutive_plus)
+    plt.plot(range(time_end), np_waiting_in_line_cumulutive_minus)
+    plt.plot(range(time_end), np.add(np_waiting_in_line_cumulutive_plus, np_waiting_in_line_cumulutive_minus))
+    
+    plt.figure(2)
+    plt.title("patients in the simulation - blue (plus), orange (not tested), green (overall)")
+    plt.plot(range(time_end), np.add(np_waiting_in_line_cumulutive_plus, np_getting_service_cumulutive_plus))
+    plt.plot(range(time_end), np.add(np_waiting_in_line_cumulutive_minus, np_getting_service_cumulutive_minus))
+    plt.plot(range(time_end), np.add(np_waiting_in_line_cumulutive_minus, np.add(np_waiting_in_line_cumulutive_plus, np.add(np_getting_service_cumulutive_minus, np_getting_service_cumulutive_plus))))
+    
+    plt.figure(3)
+    plt.title("frequency of patients")
+    name_labels = ["plus", "not tested"]
+    patients_numbers = [total_plus, total_minus]
+    plt.bar(name_labels, patients_numbers)
+    
+    plt.show()
+    
+    
+    
+    
         
     print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
     

@@ -1,9 +1,9 @@
 from fifo import Fifo
 
 class PatientsLine:
-    def __init__(self):
-        self.corona_plus_patients = Fifo("plus patients")
-        self.corona_minus_patients = Fifo("minus patients")
+    def __init__(self, patience_rate = 0):
+        self.corona_plus_patients = Fifo(patience_rate ,"plus patients")
+        self.corona_minus_patients = Fifo(patience_rate ,"minus patients")
         
     def elapse_time(self):
         self.corona_minus_patients.elapse_time()

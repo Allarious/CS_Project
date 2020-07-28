@@ -2,11 +2,11 @@ from patients_line import PatientsLine
 from numpy import random
 
 class ServiceProvider:
-    def __init__(self, array_of_means, work = "doctor"):
+    def __init__(self, array_of_means, patience_rate = 0, work = "doctor"):
         self.work = work
         self.current_minus_patients = []
         self.current_plus_patients = []
-        self.patients_line = PatientsLine()
+        self.patients_line = PatientsLine(patience_rate)
         self.number_of_service_providers = len(array_of_means)
         self.current_tables = [0] * self.number_of_service_providers
         self.current_patients = [0] * self.number_of_service_providers

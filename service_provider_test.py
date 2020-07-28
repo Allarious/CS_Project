@@ -35,13 +35,7 @@ class TestServiceProvider(unittest.TestCase):
         self.assertEqual(5, sp.patients_line.get_line_length())
         
         sp.elapse_time()
-
-        self.assertEqual(4, sp.patients_line.get_line_length())
-
         sp.elapse_time()
-        
-        self.assertEqual(1, sp.patients_line.get_line_length())
-        
         sp.elapse_time()
         sp.elapse_time()
         sp.elapse_time()

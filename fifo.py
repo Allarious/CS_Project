@@ -1,7 +1,9 @@
 from patient import Patient
 
 class Fifo:
-    def __init__(self, name = 'fifo line'):
+    def __init__(self, patience_rate = 0,  name = 'fifo line'):
+        self.patience_rate = patience_rate
+        self.waited = []
         self.line = []
         self.name = name
         self.time = 0
@@ -35,6 +37,7 @@ class Fifo:
             return None
         else:
             self.line[0].patience_in_minutes -= self.time - self.line[0].entry_time
+            self.waited.append(self.patience_rate - self.line[0].patience_in_minutes)
             return self.line.pop(0)
         
     def print_patients(self):
