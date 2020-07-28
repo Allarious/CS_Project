@@ -61,7 +61,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 1000
+    patient_goal = 10000
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
     total_number_of_patients = 0
     total_plus = 0
@@ -163,6 +163,8 @@ if __name__ == "__main__":
     for doctor_room_index in range(len(np_line_plus) - 1):
         print(str(round((np.sum(np_line_plus[doctor_room_index]) + np.sum(np_line_minus[doctor_room_index])) / time_end, 2)))
         
+    print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
+        
     #===== drawing the graphs 
     np_getting_service_cumulutive_plus = np_plus.sum(axis=0)
     np_getting_service_cumulutive_minus = np_minus.sum(axis=0)
@@ -199,7 +201,7 @@ if __name__ == "__main__":
     plus_wait, minus_wait = doctors_rooms.get_waited()
     
     plt.figure(4)
-    plt.title("frequency of waitings in line - blue (tested plus), orange (not tested)")
+    plt.title("frequency of waitings in line - orange (tested plus), blue (not tested)")
     np_plus_wait = np.array(plus_wait)
     np_minus_wait = np.array(minus_wait)
     unique_plus_wait, unique_plus_count = np.unique(np.concatenate(np_plus_wait).ravel(), return_counts=True)
@@ -213,7 +215,7 @@ if __name__ == "__main__":
     plus_service, minus_service = doctors_rooms.get_service_time()
    
     plt.figure(5)
-    plt.title("frequency of service - blue (tested plus), orange (not tested)")
+    plt.title("frequency of service - orange (tested plus), blue (not tested)")
     np_plus_service = np.array(plus_service)
     np_minus_service = np.array(minus_service)
     unique_plus_service, unique_plus_service_count = np.unique(np.concatenate(np_plus_service).ravel(), return_counts=True)
@@ -223,7 +225,4 @@ if __name__ == "__main__":
     plt.bar(unique_minus_service - 0.2, unique_minus_service_count, width=0.2)
     
     plt.show()
-    
-        
-    print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
     
