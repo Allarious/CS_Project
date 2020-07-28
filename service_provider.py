@@ -33,6 +33,7 @@ class ServiceProvider:
             if self.current_tables[table_index] == 0 and self.patients_line.get_line_length() != 0:
                 patient = self.patients_line.get_next_patient()
                 service_time = self.__get_service_time(table_index, patient)
+                print('giving service to patient')
                 table_number = table_index + 1
                 break
         
@@ -65,6 +66,8 @@ class ServiceProvider:
         self.patients_line.elapse_time()
         
         out_patients = []
+        
+        print(self.current_tables)
         
         for table in range(len(self.current_tables)):
             if self.current_tables[table] == 1:
