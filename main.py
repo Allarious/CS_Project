@@ -202,7 +202,6 @@ if __name__ == "__main__":
     plt.title("frequency of waitings in line - blue (tested plus), orange (not tested)")
     np_plus_wait = np.array(plus_wait)
     np_minus_wait = np.array(minus_wait)
-    print(np_plus_wait.flatten())
     unique_plus_wait, unique_plus_count = np.unique(np.concatenate(np_plus_wait).ravel(), return_counts=True)
     unique_minus_wait, unique_minus_count = np.unique(np.concatenate(np_minus_wait).ravel(), return_counts=True)
     
@@ -211,6 +210,19 @@ if __name__ == "__main__":
     
     plt.show()
     
+    plus_service, minus_service = doctors_rooms.get_service_time()
+   
+    plt.figure(5)
+    plt.title("frequency of service - blue (tested plus), orange (not tested)")
+    np_plus_service = np.array(plus_service)
+    np_minus_service = np.array(minus_service)
+    unique_plus_service, unique_plus_service_count = np.unique(np.concatenate(np_plus_service).ravel(), return_counts=True)
+    unique_minus_service, unique_minus_service_count = np.unique(np.concatenate(np_minus_service).ravel(), return_counts=True)
+    
+    plt.bar(unique_plus_service, unique_plus_service_count, width=0.2)
+    plt.bar(unique_minus_service - 0.2, unique_minus_service_count, width=0.2)
+    
+    plt.show()
     
         
     print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")

@@ -14,8 +14,18 @@ class DoctorsRooms:
             plus_wait.append(doctors_room.patients_line.corona_plus_patients.waited)
             minus_wait.append(doctors_room.patients_line.corona_minus_patients.waited)
         return plus_wait, minus_wait
-            
+    
+    def get_service_time(self):
+        if len(self.doctors_rooms) == 0:
+            raise("there should be at least one doctors room.") 
+        plus_service = []
+        minus_service = []
+        for doctors_room in self.doctors_rooms:
+            plus_service.append(doctors_room.answering_time_plus)
+            minus_service.append(doctors_room.answering_time_minus)
         
+        return plus_service, minus_service
+            
     def add_room(self, doctors_service_rate):
         self.doctors_rooms.append(ServiceProvider(doctors_service_rate, self.patience_rate))
     
