@@ -13,11 +13,13 @@ class DoctorsRooms:
             
     def get_next_room(self):
         if len(self.doctors_rooms) == 0:
-            raise("there should be at least one doctor room")
+            raise("there should be at least one doctor room.")
         
         mini = 0
         
         for room_index in range(len(self.doctors_rooms)):
+            if self.doctors_rooms[room_index].does_accept_patient():
+                return room_index
             line_length = self.doctors_rooms[room_index].patients_line.get_line_length()
             if line_length < self.doctors_rooms[mini].patients_line.get_line_length():
                 mini = room_index

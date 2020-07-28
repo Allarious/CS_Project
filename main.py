@@ -1,6 +1,7 @@
 from  service_provider import ServiceProvider
 from patient import Patient
 from doctors_rooms import DoctorsRooms
+from time import time
 
 def elapse_time(reception, doctors):
     patients = reception.elapse_time()
@@ -37,7 +38,9 @@ if __name__ == "__main__":
     
     # ====== End Initialization ======
     
-    for i in range(10000):
+    time_start = time()
+    
+    for i in range(20):
         
         print("*****")
         print("time: " + str(i))
@@ -57,4 +60,6 @@ if __name__ == "__main__":
         print("==========")
         print(reception.patients_line.get_line_length())
         doctors_rooms.print_info()
+        
+    print("Simulation completed in : " + str(time() - time_start))
     
