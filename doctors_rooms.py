@@ -6,10 +6,32 @@ class DoctorsRooms:
         
     def add_room(self, doctors_service_rate):
         self.doctors_rooms.append(ServiceProvider(doctors_service_rate))
-        
+    
+    def get_time(self):
+        if len(self.doctors_rooms) == 0:
+            raise("there should be at least one doctors room.")
+        return self.doctors_rooms[0].time
+    
     def elapse_time(self):
         for room in self.doctors_rooms:
             room.elapse_time()
+            
+    def get_patients_data(self):
+        array_plus = []
+        array_minus = []
+        array_line_plus = []
+        array_line_minus = []
+        left_plus = 0
+        left_minus = 0
+        for doctors_room in self.doctors_rooms:
+            array_plus.append(doctors_room.current_plus_patients)
+            array_minus.append(doctors_room.current_minus_patients)
+            array_line_plus.append(doctors_room.get_fifo_plus_data())
+            array_line_minus.append(doctors_room.get_fifo_minus_data())
+            left_plus = doctors_room.get_left_plus_patients()
+            left_minus = doctors_room.get_left_minus_patients()
+            
+        return array_plus, array_minus, array_line_plus, array_line_minus, left_plus, left_minus
             
     def get_next_room(self):
         if len(self.doctors_rooms) == 0:

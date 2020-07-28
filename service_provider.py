@@ -4,7 +4,7 @@ from numpy import random
 class ServiceProvider:
     def __init__(self, array_of_means, work = "doctor"):
         self.work = work
-        self.current_patients_getting_service = []
+        self.current_minus_patients = []
         self.current_plus_patients = []
         self.patients_line = PatientsLine()
         self.number_of_service_providers = len(array_of_means)
@@ -27,6 +27,18 @@ class ServiceProvider:
         self.current_tables[index] = service_time
         self.current_patients[index] = patient
         return service_time
+    
+    def get_fifo_plus_data(self):
+        return self.patients_line.corona_plus_patients.current_patients_waiting
+    
+    def get_fifo_minus_data(self):
+        return self.patients_line.corona_minus_patients.current_patients_waiting
+    
+    def get_left_plus_patients(self):
+        return self.patients_line.corona_plus_patients.patients_left_the_hospital
+    
+    def get_left_minus_patients(self):
+        return self.patients_line.corona_minus_patients.patients_left_the_hospital 
     
     def does_accept_patient(self):
         if 0 in self.current_tables:
@@ -92,8 +104,9 @@ class ServiceProvider:
             else:
                 break
             
-        self.current_patients_getting_service.append(self.get_number_of_current_patients())
-        self.current_plus_patients.append(self.get_number_of_plus_patients())
+        plus_patients = self.get_number_of_plus_patients()
+        self.current_minus_patients.append(self.get_number_of_current_patients() - plus_patients)
+        self.current_plus_patients.append(plus_patients)
         
         self.patients_line.elapse_time()
         
@@ -109,7 +122,7 @@ class ServiceProvider:
         # for patients in out_patients:
         #     print(patients.get_info_about_patient())
         return out_patients
-            
+    
     def print_state(self):
         print("line length is " + str(self.patients_line.get_line_length) + ".")
         print("there are " + str(self.number_of_service_providers) + " providers.")
