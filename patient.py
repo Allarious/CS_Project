@@ -2,7 +2,7 @@ class Patient:
     def __init__(self, corona_test_result, patience_in_minutes):
         self.corona_test_result = corona_test_result
         self.patience_in_minutes = patience_in_minutes
-        print("Patient Created")
+        # print("Patient Created")
     
     def set_entry_time(self, time):
         self.entry_time = time

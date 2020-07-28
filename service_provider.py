@@ -42,7 +42,7 @@ class ServiceProvider:
             if self.current_tables[table_index] == 0 and self.patients_line.get_line_length() != 0:
                 patient = self.patients_line.get_next_patient()
                 service_time = self.__get_service_time(table_index, patient)
-                print('giving service to patient')
+                # print('giving service to patient')
                 table_number = table_index + 1
                 break
         
@@ -63,7 +63,7 @@ class ServiceProvider:
         while(True):
 
             if self.patients_line.get_line_length() == 0:
-                print("no patients in line to be served.")
+                # print("no patients in line to be served.")
                 break
 
             if 0 in self.current_tables:
@@ -76,15 +76,15 @@ class ServiceProvider:
         
         out_patients = []
         
-        print(self.current_tables)
+        # print(self.current_tables)
         
         for table in range(len(self.current_tables)):
             if 0 < self.current_tables[table] <= 1:
                 out_patients.append(self.current_patients[table])
             self.current_tables[table] = max(0, self.current_tables[table] - 1)
             
-        for patients in out_patients:
-            print(patients.get_info_about_patient())
+        # for patients in out_patients:
+        #     print(patients.get_info_about_patient())
         return out_patients
             
     def print_state(self):
