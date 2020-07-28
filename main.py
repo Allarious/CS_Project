@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.dates import date2num
 import datetime
+from math import sqrt
 
 def elapse_time(reception, doctors):
     patients = reception.elapse_time()
@@ -35,6 +36,16 @@ def add_inputs(reception, patient_entry_rate, patient_patience_rate):
             
     return number_of_patients, plus, minus
     
+def test_95_percent(array):
+    amount = (1.96 * sqrt(np.var(array))) / (sqrt(len(array)) * np.mean(array))
+    print("precision is : " + str(amount))
+    
+def compute_doctors_best_rate(x, array, value):
+    final = 0
+    for a in array:
+        final += 1/(a - x)
+    final -= value
+    return final
 
 if __name__ == "__main__":
     
@@ -62,7 +73,8 @@ if __name__ == "__main__":
     time_start = time()
     
     patient_goal = 10000
-    flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
+    flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True
+    flag95 = True
     total_number_of_patients = 0
     total_plus = 0
     total_minus = 0
@@ -71,38 +83,74 @@ if __name__ == "__main__":
     
         if flag1 and total_number_of_patients >= patient_goal/10:
             print("10% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag1 = False
 
         if flag2 and total_number_of_patients >= patient_goal/10 * 2 :
             print("20% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag2 = False
             
         if flag3 and total_number_of_patients >= patient_goal/10 * 3 :
             print("30% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag3 = False
             
         if flag4 and total_number_of_patients >= patient_goal/10 * 4 :
             print("40% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag4 = False
             
         if flag5 and total_number_of_patients >= patient_goal/10 * 5 :
             print("50% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag5 = False
             
         if flag6 and total_number_of_patients >= patient_goal/10 * 6 :
             print("60% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag6 = False
             
         if flag7 and total_number_of_patients >= patient_goal/10 * 7 :
             print("70% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag7 = False
             
         if flag8 and total_number_of_patients >= patient_goal/10 * 8 :
             print("80% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             flag8 = False
             
         if flag9 and total_number_of_patients >= patient_goal/10 * 9 :
             print("90% in " + str(round(time() - time_start, 2)) + "s")
+            p_wait, m_wait = doctors_rooms.get_waited()
+            np_p_wait = np.array(p_wait)
+            np_m_wait = np.array(m_wait)
+            test_95_percent(np.concatenate(np_m_wait).ravel())
             print("No more patients are accepted, patients are waiting for service...")
             flag9 = False
         
@@ -225,4 +273,23 @@ if __name__ == "__main__":
     plt.bar(unique_minus_service - 0.2, unique_minus_service_count, width=0.2)
     
     plt.show()
+    
+    plt.figure(6)
+    
+    plt.title("effect of increasing doctors rate on line length")
+    
+    all_means = doctors_rooms.get_doctors_means()
+    np_all_means = np.array(all_means)
+    flatten_all_mean = np.concatenate(np_all_means).ravel()
+    reception_rate = reception.array_of_means[0]
+    
+    rr = np.arange(0, max(flatten_all_mean), 0.1)
+    f = []
+    for r in rr:
+        f.append(compute_doctors_best_rate(r, flatten_all_mean, reception_rate))
+    f = np.array(f)
+    
+    plt.plot(rr, f)
+    plt.show()
+    
     

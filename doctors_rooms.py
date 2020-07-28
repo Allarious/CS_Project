@@ -5,6 +5,13 @@ class DoctorsRooms:
         self.patience_rate = patience_rate
         self.doctors_rooms = []
         
+        
+    def get_doctors_means(self):
+        array = []
+        for room in self.doctors_rooms:
+            array.append(room.array_of_means)
+        return array
+        
     def get_waited(self):
         if len(self.doctors_rooms) == 0:
             raise("there should be at least one doctors room.")
