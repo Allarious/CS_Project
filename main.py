@@ -2,6 +2,7 @@ from  service_provider import ServiceProvider
 from patient import Patient
 from doctors_rooms import DoctorsRooms
 from time import time
+from numpy import random
 
 def elapse_time(reception, doctors):
     patients = reception.elapse_time()
@@ -10,9 +11,12 @@ def elapse_time(reception, doctors):
     return patients
 
 def add_inputs(reception, patient_entry_rate, patient_patience_rate):
-    reception.add_to_line(Patient("+", patient_patiance_rate))
-    reception.add_to_line(Patient("-", patient_patiance_rate))
-    reception.add_to_line(Patient("-", patient_patiance_rate))
+    
+    number_of_patients = random.poisson(lam=patient_entry_rate)
+    corona_tests = random.uniform(0, 1, number_of_patients)
+    
+    for p in range(number_of_patients):
+        reception.add_to_line(Patient("-" if corona_tests[p] > 0.1 else "+" , patient_patiance_rate))
     
 
 if __name__ == "__main__":
@@ -25,7 +29,7 @@ if __name__ == "__main__":
     number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate = list(map(int, file.readline().split(split_character)))
     print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
     
-    reception = ServiceProvider([reception_service_rate])
+    reception = ServiceProvider([reception_service_rate], "reception")
     doctors_rooms = DoctorsRooms()
     
     for line in range(number_of_rooms):

@@ -2,7 +2,8 @@ from patients_line import PatientsLine
 from numpy import random
 
 class ServiceProvider:
-    def __init__(self, array_of_means):
+    def __init__(self, array_of_means, work = "doctor"):
+        self.work = work
         self.patients_line = PatientsLine()
         self.number_of_service_providers = len(array_of_means)
         self.current_tables = [0] * self.number_of_service_providers
@@ -13,7 +14,14 @@ class ServiceProvider:
         if index >= self.number_of_service_providers:
             raise("index more than number of providers.")
             return None
-        service_time = random.exponential(self.array_of_means[index])
+        if self.work == "doctor":
+            service_time = random.exponential(self.array_of_means[index])
+        else:
+            # it might be zero !!
+            service_time = random.poisson(self.array_of_means[index])
+            # i dont know about this one!
+            if service_time == 0:
+                service_time = 1
         self.current_tables[index] = service_time
         self.current_patients[index] = patient
         return service_time
