@@ -41,7 +41,7 @@ if __name__ == "__main__":
     split_character = ","
     
     number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate = list(map(int, file.readline().split(split_character)))
-    # print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
+    print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
     
     reception = ServiceProvider([reception_service_rate], "reception")
     doctors_rooms = DoctorsRooms()
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 100000
+    patient_goal = 100
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
     total_number_of_patients = 0
     total_plus = 0
@@ -103,14 +103,13 @@ if __name__ == "__main__":
             print("No more patients are accepted, patients are waiting for service...")
             flag9 = False
         
-        if flag9:
+        if total_number_of_patients < patient_goal:
             number_of_patients, plus, minus = add_inputs(reception, patient_entry_rate, patient_patiance_rate)
             total_number_of_patients += number_of_patients
             total_plus += plus
             total_minus += minus
             
-            
-        if reception.patients_line.get_line_length() == 0:
+        if total_number_of_patients >= patient_goal and reception.patients_line.get_line_length() == 0:
             break
         
         patients = elapse_time(reception, doctors_rooms)
@@ -149,6 +148,9 @@ if __name__ == "__main__":
     print("Mean amount of time spent in line : " + str(round((np.sum(np_line_plus) + np.sum(np_line_minus))/total_number_of_patients, 2)))
     print("Mean amount of time spent in line (patients tested plus for corona) : " + str(round(np.sum(np_line_plus)/total_plus, 2)))
     print("Mean amount of time spent in line (patients not yet tested for corona) : " + str(round(np.sum(np_line_minus)/total_minus, 2)))
+    
+    #===== task for patients who left
+    print("A total amount of " + str(left_plus + left_minus) + " left the hospital. " + str(left_plus) + " of them were tested plus for corona and " + str(left_minus) + " of them were not tested yet.")
         
     print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
     
