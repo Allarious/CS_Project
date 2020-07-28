@@ -4,6 +4,8 @@ from numpy import random
 class ServiceProvider:
     def __init__(self, array_of_means, work = "doctor"):
         self.work = work
+        self.current_patients_getting_service = []
+        self.current_plus_patients = []
         self.patients_line = PatientsLine()
         self.number_of_service_providers = len(array_of_means)
         self.current_tables = [0] * self.number_of_service_providers
@@ -31,6 +33,16 @@ class ServiceProvider:
             return True
         return False
     
+    def get_number_of_plus_patients(self):
+        number_of_plus_patients = 0
+        for patient in self.current_patients:
+            if patient == 0 :
+                continue
+            if patient.corona_test_result == "+":
+                number_of_plus_patients += 1
+                
+        return number_of_plus_patients
+    
     def give_service_to_patient(self):
         service_time = 0
         table_number = 0
@@ -56,6 +68,15 @@ class ServiceProvider:
         
         return service_time, table_number
     
+    def get_number_of_current_patients(self):
+        number_of_busy_tables = 0
+        for table in self.current_tables:
+            if table != 0:
+                number_of_busy_tables += 1
+                
+        return number_of_busy_tables
+                
+    
     def add_to_line(self, patient):
         self.patients_line.add_to_line(patient)
         
@@ -71,7 +92,9 @@ class ServiceProvider:
             else:
                 break
             
-            
+        self.current_patients_getting_service.append(self.get_number_of_current_patients())
+        self.current_plus_patients.append(self.get_number_of_plus_patients())
+        
         self.patients_line.elapse_time()
         
         out_patients = []

@@ -46,7 +46,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 1000000
+    patient_goal = 100
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True 
     total_number_of_patients = 0
     

@@ -5,6 +5,8 @@ class Fifo:
         self.line = []
         self.name = name
         self.time = 0
+        self.current_patients_waiting = []
+        self.patients_left_the_hospital = 0
         # print("Fifo named " + name + " Created")
     
     def add_to_line(self, patient):
@@ -12,6 +14,7 @@ class Fifo:
         self.line.append(patient)
     
     def elapse_time(self):
+        self.current_patients_waiting.append(len(self.line))
         # print("elapsing time in " + self.name + " going from " + str(self.time) + " to " + str(self.time + 1) + ".")
         self.time = self.time + 1
         self.__check_if_patients_leave()
@@ -22,6 +25,7 @@ class Fifo:
         for patient in self.line:
             if patient.entry_time + patient.patience_in_minutes <= self.time:
                 # print("a patient left " + self.name)
+                self.patients_left_the_hospital += 1
                 continue
             next_line.append(patient)
         self.line = next_line
