@@ -17,6 +17,8 @@ def elapse_time(reception, doctors):
 def add_inputs(reception, patient_entry_rate, patient_patience_rate):
     
     number_of_patients = np.random.poisson(lam=patient_entry_rate)
+    if number_of_patients == 0:
+        return 0, 0, 0
     corona_tests = np.random.uniform(0, 1, number_of_patients)
     
     plus = 0
@@ -84,7 +86,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 100
+    patient_goal = 10000
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True
     flag95 = True
     total_number_of_patients = 0
