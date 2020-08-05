@@ -61,7 +61,12 @@ if __name__ == "__main__":
     file = open("input.txt", "r")
     split_character = ","
     
-    number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate = list(map(int, file.readline().split(split_character)))
+    array_inp = file.readline().split(split_character)
+    
+    number_of_rooms = int(array_inp[0])
+    patient_entry_rate = float(array_inp[1])
+    patient_patiance_rate = int(array_inp[2])
+    reception_service_rate = int(array_inp[3])
     # print(number_of_rooms, patient_entry_rate, patient_patiance_rate, reception_service_rate)
     
     reception = ServiceProvider([reception_service_rate], patient_patiance_rate, "reception")
@@ -79,7 +84,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 10000
+    patient_goal = 100
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True
     flag95 = True
     total_number_of_patients = 0
