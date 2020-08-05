@@ -128,6 +128,8 @@ class ServiceProvider:
             if 0 < self.current_tables[table] <= 1:
                 out_patients.append(self.current_patients[table])
             self.current_tables[table] = max(0, self.current_tables[table] - 1)
+            if self.current_tables[table] == 0:
+                self.current_patients[table] = 0
             
         # for patients in out_patients:
         #     print(patients.get_info_about_patient())

@@ -37,8 +37,15 @@ def add_inputs(reception, patient_entry_rate, patient_patience_rate):
     return number_of_patients, plus, minus
     
 def test_95_percent(array):
-    amount = (1.96 * sqrt(np.var(array))) / (sqrt(len(array)) * np.mean(array))
-    print("precision is : " + str(amount))
+    if len(array) == 0:
+        print("array is empty")
+        return
+    head = (1.96 * sqrt(np.var(array)))
+    amount = (sqrt(len(array)) * np.mean(array))
+    if amount == 0:
+        print("devision by zero")
+    else:
+        print("precision is : " + str(head/amount))
     
 def compute_doctors_best_rate(x, array, value):
     final = 0
@@ -263,7 +270,7 @@ if __name__ == "__main__":
     plus_service, minus_service = doctors_rooms.get_service_time()
    
     plt.figure(5)
-    plt.title("frequency of service - orange (tested plus), blue (not tested)")
+    plt.title("frequency of service - blue (tested plus), orange (not tested)")
     np_plus_service = np.array(plus_service)
     np_minus_service = np.array(minus_service)
     unique_plus_service, unique_plus_service_count = np.unique(np.concatenate(np_plus_service).ravel(), return_counts=True)
