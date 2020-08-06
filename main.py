@@ -86,7 +86,7 @@ if __name__ == "__main__":
     
     time_start = time()
     
-    patient_goal = 10000
+    patient_goal = 100
     flag1 = flag2 = flag3 = flag4 = flag5 = flag5 = flag6 = flag7 = flag8 = flag9 = True
     flag95 = True
     total_number_of_patients = 0
@@ -174,7 +174,7 @@ if __name__ == "__main__":
             total_plus += plus
             total_minus += minus
             
-        if total_number_of_patients >= patient_goal and reception.patients_line.get_line_length() == 0:
+        if total_number_of_patients >= patient_goal and reception.patients_line.get_line_length() == 0 and doctors_rooms.get_number_of_patients() == 0:
             break
         
         patients = elapse_time(reception, doctors_rooms)
@@ -222,7 +222,7 @@ if __name__ == "__main__":
     #===== task for mean line length of reception and doctors rooms
     print("reception mean line length was : " + str(round((np.sum(np_line_plus[-1]) + np.sum(np_line_minus[-1])) / time_end, 2)) + " for " + str(time_end) + " minutes.")
     print("and doctors rooms line mean length was according to the following: ")
-    for doctor_room_index in range(len(np_line_plus) - 1):
+    for doctor_room_index in range(len(np_line_plus)):
         print(str(round((np.sum(np_line_plus[doctor_room_index]) + np.sum(np_line_minus[doctor_room_index])) / time_end, 2)))
         
     print("Simulation completed in : " + str(round(time() - time_start, 2)) + "s")
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     np_waiting_in_line_cumulutive_minus = np_line_minus.sum(axis=0)
     
     plt.figure(0)
-    plt.title("answering all patients to - blue (plus), orange (not tested), green (overall)")
+    plt.title("answering to all of the current patients - blue (plus), orange (not tested), green (overall)")
     plt.plot(range(time_end), np_getting_service_cumulutive_plus)
     plt.plot(range(time_end), np_getting_service_cumulutive_minus)
     plt.plot(range(time_end), np.add(np_getting_service_cumulutive_plus, np_getting_service_cumulutive_minus))

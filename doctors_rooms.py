@@ -5,6 +5,12 @@ class DoctorsRooms:
         self.patience_rate = patience_rate
         self.doctors_rooms = []
         
+    def get_number_of_patients(self):
+        num = 0
+        for room in self.doctors_rooms:
+            num += room.get_number_of_current_patients()
+            
+        return num
         
     def get_doctors_means(self):
         array = []
